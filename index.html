@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cowin notifier</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="root">
+      <h4>Cowin notifier</h4>
+      <form class="form">
+        <div class="input-group" >
+          <span>Pincode: </span>
+          <input required id="pincode" placeholder="Enter pincode"></input>
+        </div>
+
+        <div class="input-group" >
+          <span>Date: </span>
+          <input required type="date" id="date" placeholder="Enter date"></input>
+        </div>
+
+        <button type="button" onclick="notifyMe()" class="button">Notify Me</button>
+      </form>
+
+      <div class="display-wrapper">
+        <div id="display"></div>
+        <img src="./hourglass.gif"  id="hourglass" alt="" class="hourglass"/>
+      </div>
+
+      <div class="display-wrapper">
+        <div id="output-display"></div>
+        <div id="timestamp-display"></div>
+      </div>
+
+
+
+
+      <div class="notification-wrapper">
+
+        <audio id="myAudio" loop>
+          <source src="./bell.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+        
+        
+        
+        <button onclick="playAudio()" type="button">Test Notification</button>
+        <button onclick="pauseAudio()" type="button">Pause Notification</button>
+      </div>
+    </div>
+    
+    <script src="./script.js"  ></script>
+  </body>
+</html>
