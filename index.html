@@ -19,7 +19,7 @@
 
     <div class="root">
       <h4>Cowin notifier</h4>
-      <form class="form">
+      <form id="form">
         <div class="input-group" >
           <span>Pincode: </span>
           <input required id="pincode" placeholder="Enter pincode"></input>
@@ -30,7 +30,15 @@
           <input required type="date" id="date" placeholder="Enter date"></input>
         </div>
 
-        <button type="button" onclick="notifyMe()" class="button">Notify Me</button>
+        <div class="input-group" >
+          <span>Interval: </span>
+          <input required type="number" id="interval" placeholder="Enter interval in seconds" value="5"></input>
+        </div>
+
+        <div class="actions-wrapper">
+          <button type="submit" id="button">Notify Me</button>
+          <button type="button" id="reset">Reset</button>
+        </div>
       </form>
 
       <div class="display-wrapper">
