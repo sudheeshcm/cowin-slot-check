@@ -1,5 +1,5 @@
-// const { URL, URLSearchParams } = require('url');
 let interval = null;
+let scrollCount = 1;
 
 document.addEventListener('DOMContentLoaded', (event) => {
   const form = document.getElementById('form');
@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const pincode = document.getElementById('pincode').value || '';
     const frequency = document.getElementById('interval').value || '';
+    const age = parseInt(document.getElementById('age').value || '18');
+    const dose = document.getElementById('dose').value || '';
     const dateString = document.getElementById('date').value || '';
     const date = new Date(dateString);
 
@@ -38,12 +40,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     button.setAttribute('disabled', true);
 
     interval = setInterval(
-      () => checkForSlots(pincode, dateString ? formattedDate : null),
+      () =>
+        checkForSlots(pincode, dateString ? formattedDate : null, age, dose),
       frequency * 1000
     );
   }
 
-  function checkForSlots(pincode, date) {
+  function checkForSlots(pincode, date, age, dose) {
     const url = new URL(
       'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin'
     );
@@ -55,20 +58,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
       .then((data) => {
         const outputDisplay = document.getElementById('output-display');
         const { sessions = [], centers = [] } = data;
+        const availableCenters = [];
 
-        const hasCentersWithSlots = centers.some(
+        let hasCentersWithSlots = false;
+        centers.forEach(
           (center) =>
             center.sessions &&
             center.sessions.length &&
-            center.sessions.some((session) => session.available_capacity > 0)
+            center.sessions.forEach((session) => {
+              if (session.min_age_limit <= age && session[dose] > 0) {
+                availableCenters.push(session.name);
+                hasCentersWithSlots = true;
+              }
+            })
         );
 
-        const hasSessionsWithSlots = sessions.some(
-          (session) => session.available_capacity > 0
-        );
+        let hasSessionsWithSlots = false;
+        sessions.forEach((session) => {
+          if (session.min_age_limit <= age && session[dose] > 0) {
+            availableCenters.push(session.name);
+            hasSessionsWithSlots = true;
+          }
+        });
 
         if (hasCentersWithSlots || hasSessionsWithSlots) {
-          outputDisplay.innerHTML = `<span>Slots available. <b>Pincode:</b> ${pincode}..</span>`;
+          outputDisplay.setAttribute('class', 'alert alert-success');
+          outputDisplay.innerHTML = `
+            <div>Slots available. </div>
+            <div><b>Pincode:</b> ${pincode}..</div>
+            <div>Centers: <b>${availableCenters.toString()}</b></div>
+          `;
+          if (scrollCount > 0) {
+            outputDisplay.scrollIntoView();
+            scrollCount--;
+          }
           playAudio();
           if (!('Notification' in window)) {
             alert('This browser does not support desktop notification');
@@ -76,7 +99,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             new Notification('Slots are available..');
           }
         } else {
+          outputDisplay.setAttribute('class', 'alert alert-danger');
           outputDisplay.innerHTML = `<span>Slots not available.`;
+          if (scrollCount > 0) {
+            outputDisplay.scrollIntoView();
+            scrollCount--;
+          }
           pauseAudio();
         }
 
@@ -92,8 +120,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById('pincode').value = '';
     document.getElementById('interval').value = 5;
+    document.getElementById('age').value = '45';
     document.getElementById('date').value = '';
     document.getElementById('output-display').innerHTML = '';
+    document.getElementById('output-display').removeAttribute('class');
     document.getElementById('display').innerHTML = '';
     const loader = document.getElementById('hourglass');
     loader.setAttribute('class', 'hourglass');

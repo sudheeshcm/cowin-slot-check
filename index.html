@@ -4,70 +4,98 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Cowin notifier</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles.css">
-  </head>
-  <body>
-    <!--[if lt IE 7]>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Cowin notifier</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./styles.css">
+  <link async href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="root">
-      <h4>Cowin notifier</h4>
-      <form id="form">
-        <div class="input-group" >
-          <span>Pincode: </span>
-          <input required id="pincode" placeholder="Enter pincode"></input>
-        </div>
-
-        <div class="input-group" >
-          <span>Date: </span>
-          <input required type="date" id="date" placeholder="Enter date"></input>
-        </div>
-
-        <div class="input-group" >
-          <span>Interval: </span>
-          <input required type="number" id="interval" placeholder="Enter interval in seconds" value="5"></input>
-        </div>
-
-        <div class="actions-wrapper">
-          <button type="submit" id="button">Notify Me</button>
-          <button type="button" id="reset">Reset</button>
-        </div>
-      </form>
-
-      <div class="display-wrapper">
-        <div id="display"></div>
-        <img src="./hourglass.gif"  id="hourglass" alt="" class="hourglass"/>
+  <div class="root">
+    <title>
+      Cowin Notifier
+    </title>
+    <form id="form">
+      <h4 class="mb-3">Cowin notifier</h4>
+      <div class="mb-3">
+        <label for="pincode" class="form-label">Pincode</label>
+        <input class="form-control" required id="pincode" placeholder="Enter pincode"></input>
       </div>
 
-      <div class="display-wrapper">
-        <div id="output-display"></div>
-        <div id="timestamp-display"></div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Date:</label>
+        <input class="form-control" required type="date" id="date" placeholder="Enter date"></input>
       </div>
 
-
-
-
-      <div class="notification-wrapper">
-
-        <audio id="myAudio" loop>
-          <source src="./bell.wav" type="audio/wav">
-          Your browser does not support the audio element.
-        </audio>
-        
-        
-        
-        <button onclick="playAudio()" type="button">Test Notification</button>
-        <button onclick="pauseAudio()" type="button">Pause Notification</button>
+      <div class="mb-3">
+        <label for="age" class="form-label">Age:</label>
+        <select required class="form-select" id="age" placeholder="Select age">
+          <option value="45">45+ years</option>
+          <option value="18">18 - 45 years</option>
+        </select>
       </div>
+
+      <div class="mb-3">
+        <label for="dose" class="form-label">Dose:</label>
+        <select required class="form-select" id="dose" placeholder="Select dose">
+          <option value="available_capacity_dose1">Dose 1</option>
+          <option value="available_capacity_dose2">Dose 2</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="interval" class="form-label">Interval:</label>
+        <input required type="number" id="interval" class="form-control" placeholder="Enter interval in seconds" value="5"></input>
+      </div>
+
+      <div class="actions-wrapper">
+        <button type="submit" id="button" class="btn btn-primary">Notify Me</button>
+        <button type="button" id="reset" class="btn btn-secondary">Reset</button>
+      </div>
+
+    </form>
+
+    <div class="display-wrapper">
+      <div id="display"></div>
+      <img src="./hourglass.gif" id="hourglass" alt="" class="hourglass" />
     </div>
-    
-    <script src="./script.js"  ></script>
-  </body>
+
+    <div class="display-wrapper">
+      <div id="output-display"></div>
+      <div id="timestamp-display"></div>
+    </div>
+
+
+
+
+    <div class="notification-wrapper">
+
+      <audio id="myAudio" loop>
+        <source src="./bell.wav" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+
+
+
+      <button onclick="playAudio()" type="button" class="btn btn-light test-btn">Test Notification</button>
+      <button onclick="pauseAudio()" type="button" class="btn btn-light">Pause Notification</button>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+
 </html>
